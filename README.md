@@ -11,8 +11,8 @@ LeakyReLU 在 GAN 中被广泛运用，它的作用是防止普通 ReLU 当 W �
 
 BatchNormalization 是为了加速收敛，第一层网络和输出层不加 Batch normalization，之后的顺序是 Conv->BN->LeakyReLU
 
-tanh 用作 Generator 最后一层输出的 activation，而不是 sigmoid 函数，原因是， 
-#1 tanh 比 sigmoid 可以提供更大的梯度值。 
-#2 tanh(x) 在 [-1,1]之间是对称的，防止了梯度的 bias。 参考 LeCun 的[Efficient BackProp](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
+tanh 用作 Generator 最后一层输出的 activation，而不是 sigmoid 函数，原因是:
+1. tanh 比 sigmoid 可以提供更大的梯度值。 
+2. tanh(x) 在 [-1,1]之间是对称的，防止了梯度的 bias。 参考 LeCun 的[Efficient BackProp](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
 
 其余的训练技巧，参考[How to Train a GAN? Tips and tricks to make GANs work](https://github.com/soumith/ganhacks#authors)
