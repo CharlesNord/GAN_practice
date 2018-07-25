@@ -20,24 +20,7 @@ class Sample:
         # sample from uniform distribution in the 3sigma interval
         x = torch.linspace(self.data_min, self.data_max, N) + torch.rand(N) * 0.01
         return x.view(-1, 1).to('cuda:0')
-
-#
-# class Discriminator(torch.nn.Module):
-#     def __init__(self):
-#         super(Discriminator, self).__init__()
-#         self.l1 = torch.nn.Linear(1, 10)
-#         self.l1_relu = torch.nn.ReLU()
-#         self.l2 = torch.nn.Linear(10, 10)
-#         self.l2_relu = torch.nn.ReLU()
-#         self.l3 = torch.nn.Linear(10, 1)
-#         self.l3_sigmoid = torch.nn.Sigmoid()
-#
-#     def forward(self, x):
-#         x = self.l1_relu(self.l1(x))
-#         x = self.l2_relu(self.l2(x))
-#         x = self.l3_sigmoid(self.l3(x))
-#         return x
-
+    
 
 class Discriminator(torch.nn.Module):
     def __init__(self):
