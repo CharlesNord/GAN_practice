@@ -43,9 +43,9 @@ class Discriminator(torch.nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
         self.l1 = torch.nn.Linear(1, 10)
-        self.l1_prelu = torch.nn.ReLU()
+        self.l1_prelu = torch.nn.PReLU()
         self.l2 = torch.nn.Linear(10, 10)
-        self.l2_prelu = torch.nn.ReLU()
+        self.l2_prelu = torch.nn.PReLU()
         self.l3 = torch.nn.Linear(10, 1)
         self.l3_sigmoid = torch.nn.Sigmoid()
 
@@ -84,7 +84,7 @@ def plot_fig(discriminate, generate, sample):
     gs = gs_tensor.detach().cpu().numpy()
     plt.hist(gs, bins=10, density=True)
     axes = plt.gca()
-    axes.set_ylim(0, 4)
+    axes.set_ylim(0, 2)
     axes.set_xlim(-5, 5)
 
     # plt.show()
