@@ -89,7 +89,7 @@ for epoch in range(200):
         real_loss = adversarial_loss(pred_real, valid)
         fake_loss = adversarial_loss(pred_gen, fake)
         d_loss = (real_loss + fake_loss) / 2
-        d_loss.backward(retain_graph=True)
+        d_loss.backward(retain_graph=True) # retain_graph 十分重要，否则计算图内存将会被释放
         optimizer_D.step()
 
         g_loss = adversarial_loss(pred_gen, valid)
