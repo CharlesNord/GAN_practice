@@ -79,22 +79,23 @@ for epoch in range(200):
         fake = torch.Tensor(imgs.size(0), 1).fill_(0.0).to(device)
 
         real_imgs = imgs.to(device)
-
-        optimizer_G.zero_grad()
         z = torch.randn((imgs.shape[0], 100)).to(device)
         gen_imgs = generator(z)
 
-        g_loss = adversarial_loss(discriminator(gen_imgs), valid)
-        # g_loss = -adversarial_loss(1-discriminator(gen_imgs), valid)
-        g_loss.backward()
-        optimizer_G.step()
+        pred_gen = discriminator(gen_imgs)
+        pred_real = discriminator(real_imgs)
 
         optimizer_D.zero_grad()
-        real_loss = adversarial_loss(discriminator(real_imgs), valid)
-        fake_loss = adversarial_loss(discriminator(gen_imgs.detach()), fake) # detach is important
-        d_loss = (real_loss+fake_loss)/2
-        d_loss.backward()
+        real_loss = adversarial_loss(pred_real, valid)
+        fake_loss = adversarial_loss(pred_gen, fake)
+        d_loss = (real_loss + fake_loss) / 2
+        d_loss.backward(retain_graph=True)
         optimizer_D.step()
+
+        g_loss = adversarial_loss(pred_gen, valid)
+        optimizer_G.zero_grad()
+        g_loss.backward()
+        optimizer_G.step()
 
         print("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]"%(epoch, 200, i, len(dataloader), d_loss.item(), g_loss.item()))
         batches_done = epoch*len(dataloader)+i
